@@ -1,61 +1,72 @@
 "use client";
 
+import { profile, social } from "@/data/content";
 import { useLanguage } from "@/i18n/LanguageProvider";
+import { CvLink } from "@/components/CvLink";
+import { GithubIcon, LinkedinIcon } from "@/components/SocialIcons";
 
 export function Hero() {
-  const { t, name } = useLanguage();
+  const { t, name, locale } = useLanguage();
 
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden pb-10 pt-28 sm:pb-12 sm:pt-32"
-    >
-      <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <div className="clay-blob start-[6%] top-[16%] h-40 w-40 bg-[#b8ebe3] sm:h-56 sm:w-56" />
-        <div
-          className="clay-blob end-[8%] top-[22%] h-32 w-32 bg-[#f3c4ba] sm:h-44 sm:w-44"
-          style={{ animationDelay: "-3.5s" }}
-        />
-        <div
-          className="clay-blob bottom-[18%] start-[35%] h-24 w-24 bg-[#c9daf0] sm:h-32 sm:w-32"
-          style={{ animationDelay: "-7s" }}
-        />
-      </div>
+    <section id="top" className="relative overflow-hidden border-b border-[var(--line)]">
+      <div className="site-grid pointer-events-none absolute inset-0" aria-hidden />
+      <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+        <p className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-accent-dim px-3 py-1 text-xs font-medium text-accent">
+          <span className="size-1.5 rounded-full bg-ok" aria-hidden />
+          {t.badge}
+        </p>
 
-      <div className="relative mx-auto w-full max-w-6xl px-5 sm:px-8">
-        <div className="clay animate-rise mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm text-fog">
-          <span className="status-dot size-2.5 rounded-full bg-teal-bright" />
-          {t.available}
-        </div>
-
-        <p className="animate-rise font-display text-[clamp(2.6rem,8vw,5.5rem)] leading-[1.05] font-extrabold tracking-[-0.02em] text-ink">
+        <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
           {name}
-        </p>
-
-        <div className="clay-inset mt-5 h-3 w-28 rounded-full sm:w-36" />
-
-        <h1 className="animate-rise-delay-1 mt-8 max-w-2xl font-display text-2xl leading-relaxed font-bold text-ink-soft sm:text-3xl md:text-4xl">
-          {t.title}
         </h1>
+        <p className="mt-3 max-w-2xl text-lg font-medium text-muted sm:text-xl">{t.title}</p>
+        <p className="mt-5 max-w-[65ch] text-base leading-7 text-muted">{t.bio}</p>
 
-        <p className="animate-rise-delay-2 mt-5 max-w-[42rem] text-base leading-8 text-fog sm:text-lg">
-          {t.bio}
-        </p>
+        <ul className="mt-6 flex flex-wrap gap-2">
+          {t.roles.map((role) => (
+            <li
+              key={role}
+              className="rounded-md border border-[var(--line)] px-2.5 py-1 text-xs text-muted"
+            >
+              {role}
+            </li>
+          ))}
+        </ul>
 
-        <div className="animate-rise-delay-3 mt-10 flex flex-wrap items-center gap-3">
-          <a
-            href="#projects"
-            className="cta-primary inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-semibold"
-          >
+        <div className="mt-8 flex flex-wrap gap-2">
+          <a href="#projects" className="btn btn-primary">
             {t.ctaProjects}
           </a>
+          <CvLink className="btn btn-accent">{t.ctaCv}</CvLink>
           <a
-            href="#contact"
-            className="cta-ghost inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-medium"
+            href={social.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost"
           >
+            <GithubIcon className="size-4" />
+            {t.ctaGithub}
+          </a>
+          {social.linkedin ? (
+            <a
+              href={social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost"
+            >
+              <LinkedinIcon className="size-4" />
+              {t.ctaLinkedin}
+            </a>
+          ) : null}
+          <a href="#contact" className="btn btn-ghost">
             {t.ctaContact}
           </a>
         </div>
+
+        <p className="mt-6 text-sm text-faint">
+          {t.basedIn}: {locale === "ar" ? profile.locationAr : profile.locationEn}
+        </p>
       </div>
     </section>
   );

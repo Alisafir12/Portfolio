@@ -1,63 +1,36 @@
 "use client";
 
-import { skillGroups } from "@/data/content";
+import { profile } from "@/data/content";
 import { useLanguage } from "@/i18n/LanguageProvider";
 
-function SkillList({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div className="pt-2">
-      <p className="mb-3 text-sm font-medium text-fog">{title}</p>
-      <ul className="flex flex-wrap gap-2.5">
-        {items.map((skill) => (
-          <li
-            key={skill}
-            className="skill-chip rounded-full px-4 py-2 text-sm text-ink-soft"
-          >
-            {skill}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 export function About() {
-  const { t, name } = useLanguage();
+  const { t, locale } = useLanguage();
 
   return (
-    <section id="about" className="relative scroll-mt-28 py-20 sm:py-28">
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-        <div className="clay grid gap-10 rounded-[1.75rem] p-7 sm:gap-12 sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:p-12">
-          <div>
-            <h2 className="font-display text-3xl font-extrabold text-ink sm:text-4xl">
-              {t.aboutTitle}
-            </h2>
-            <p className="mt-3 text-fog">{name}</p>
-            <div className="clay-inset mt-6 h-3 w-20 rounded-full" />
-          </div>
-
-          <div className="space-y-5">
-            {t.about.map((paragraph) => (
-              <p
-                key={paragraph}
-                className="max-w-[65ch] text-base leading-9 text-paper-muted sm:text-lg sm:leading-9"
-              >
-                {paragraph}
-              </p>
-            ))}
-
-            <div className="space-y-5 pt-3">
-              <SkillList
-                title={t.skillsLanguages}
-                items={skillGroups.languages}
-              />
-              <SkillList
-                title={t.skillsDatabases}
-                items={skillGroups.databases}
-              />
-              <SkillList title={t.skillsTools} items={skillGroups.tools} />
+    <section id="about" className="scroll-mt-20 border-b border-[var(--line)] py-16 sm:py-20">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.4fr_0.6fr]">
+        <div>
+          <h2 className="text-2xl font-semibold text-ink sm:text-3xl">{t.aboutTitle}</h2>
+        </div>
+        <div>
+          <p className="max-w-[65ch] text-base leading-7 text-ink">{t.aboutLead}</p>
+          {t.aboutBody.map((p) => (
+            <p key={p} className="mt-4 max-w-[65ch] text-base leading-7 text-muted">
+              {p}
+            </p>
+          ))}
+          <dl className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="card p-4">
+              <dt className="text-xs uppercase tracking-wide text-faint">{t.basedIn}</dt>
+              <dd className="mt-1 text-sm font-medium text-ink">
+                {locale === "ar" ? profile.locationAr : profile.locationEn}
+              </dd>
             </div>
-          </div>
+            <div className="card p-4">
+              <dt className="text-xs uppercase tracking-wide text-faint">{t.available}</dt>
+              <dd className="mt-1 text-sm font-medium text-accent">{t.badge}</dd>
+            </div>
+          </dl>
         </div>
       </div>
     </section>

@@ -26,7 +26,7 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 const STORAGE_KEY = "alisafir-locale";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("ar");
+  const [locale, setLocaleState] = useState<Locale>("en");
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -34,10 +34,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       setLocaleState(saved);
       return;
     }
-    const prefersEnglish = window.navigator.language
-      .toLowerCase()
-      .startsWith("en");
-    if (prefersEnglish) setLocaleState("en");
+    const lang = window.navigator.language.toLowerCase();
+    if (lang.startsWith("ar")) setLocaleState("ar");
   }, []);
 
   const setLocale = useCallback((next: Locale) => {
@@ -55,8 +53,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.documentElement.dir = dir;
     document.title =
       locale === "ar"
-        ? "م/ علي سفير | مطوّر تطبيقات وأنظمة ويب"
-        : "Eng/Ali Safir | Software Engineer & App Developer";
+        ? "علي سفير | مهندس برمجيات ومطوّر Full-Stack"
+        : "Ali Safir | Software Engineer & Full-Stack Developer";
   }, [locale]);
 
   const value = useMemo<LanguageContextValue>(
